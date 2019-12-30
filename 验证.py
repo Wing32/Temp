@@ -18,14 +18,20 @@ def rule(num, rate):
     return total_num
 
 # 初始化数据
-num = 1000.0
-rate = 0.40
+rate = np.linspace(0,0.5,100)
 print(rate)
 # 磨炼次数 
-MAX = 1000
-for i in range(MAX):
-    num = rule(num,rate)
-    print(i,num,'\r',end= '')
-    time.sleep(0.01)
+MAX = 3000
+stor_num = np.zeros((1000,MAX))
+print(stor_num.shape)
+for i in range(len(rate)):
+    num = 100.0
+    for j in range(MAX):
+        num = rule(num,rate[i])
+        stor_num[i,j] = num
 
+    plt.semilogy(range(MAX),stor_num[i,:])
 
+Max_iter = rate[np.argmax(stor_num[:,MAX-1])]
+plt.show()
+print(Max_iter)
